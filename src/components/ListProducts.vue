@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import CardProduct from "../ListProducts/CardProduct.vue";
+import CardProduct from "./CardProduct.vue";
 
 export default {
   name: "HomeList",

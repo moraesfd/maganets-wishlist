@@ -25,7 +25,7 @@ export default {
       default: false,
     },
     product: {
-      type: String,
+      type: Object,
     },
   },
   data() {
