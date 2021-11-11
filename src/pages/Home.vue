@@ -1,19 +1,55 @@
 <template>
   <div class="home">
-    <Header company="MagaNets" />
-    <HomeList />
+    <LayoutDefault>
+      <ListProducts title="Home" :list="productsOnApi" />
+    </LayoutDefault>
   </div>
 </template>
 
 <script>
-import Header from '@/components/Header.vue'
-import HomeList from '@/components/HomeList.vue'
+import axios from "axios";
+import LayoutDefault from "../layout/LayoutDefault.vue";
+import ListProducts from "../components/ListProducts/index.vue";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    Header,
-    HomeList
-  }
-}
+    LayoutDefault,
+    ListProducts,
+  },
+  data() {
+    return {
+      productsOnApi: [],
+      productsOnLocalStorage: [],
+      newProductOnLocalStorage: null,
+    };
+  },
+  mounted() {
+    this.getDataFromApi();
+  },
+  methods: {
+    async getDataFromApi() {
+      try {
+        const res = await axios.get(
+          "https://run.mocky.io/v3/66063904-d43c-49ed-9329-d69ad44b885e"
+        );
+
+        this.productsOnApi = res.data.products;
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    verifyLocalStorage() {
+      if (localStorage.getItem("products")) {
+        try {
+          this.productsOnLocalStorage = JSON.parse(
+            localStorage.getItem("products")
+          );
+        } catch (e) {
+          localStorage.removeItem("products");
+        }
+      }
+    },
+  },
+};
 </script>

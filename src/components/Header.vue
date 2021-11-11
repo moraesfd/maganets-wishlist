@@ -22,7 +22,7 @@ header {
     @apply container;
 
     &__company {
-      @apply text-white;
+      @apply text-white font-black text-lg;
     }
   }
 }
