@@ -2,7 +2,7 @@
   <div class="list-products">
     <h1 class="list-products__title">{{ title }}</h1>
     <ul v-if="type == 'home'" class="list-products__list">
-      <li v-for="product of list" :key="product.id">
+      <li v-for="product of resultQuery" :key="product.id">
         <card-product :product="product" />
       </li>
     </ul>
@@ -30,8 +30,14 @@ export default {
   },
   data() {
     return {
+      searchQuery: null,
       wishlist: [],
     };
+  },
+  mounted() {
+    this.$root.$on("sendQuery", (data) => {
+      this.searchQuery = data;
+    });
   },
   components: {
     CardProduct,
@@ -39,6 +45,20 @@ export default {
   methods: {
     updateWishlist(product) {
       this.wishlist.push(product);
+    },
+  },
+  computed: {
+    resultQuery() {
+      if (this.searchQuery) {
+        return this.list.filter((item) => {
+          return this.searchQuery
+            .toLowerCase()
+            .split(" ")
+            .every((v) => item.title.toLowerCase().includes(v));
+        });
+      } else {
+        return this.list;
+      }
     },
   },
 };
