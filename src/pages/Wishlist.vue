@@ -1,22 +1,22 @@
 <template>
   <div class="wishlist">
-    <LayoutDefault>
+    <AppLayout>
       <ListProducts
         title="Home > Lista de desejos"
         type="wishlist"
         :list="wishlist"
       />
-    </LayoutDefault>
+    </AppLayout>
   </div>
 </template>
 <script>
-import LayoutDefault from "../layout/LayoutDefault.vue";
-import ListProducts from "../components/ListProducts/index.vue";
+import AppLayout from "../layout/AppLayout.vue";
+import ListProducts from "../components/ListProducts.vue";
 
 export default {
   name: "Wishlist",
   components: {
-    LayoutDefault,
+    AppLayout,
     ListProducts,
   },
   data() {

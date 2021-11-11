@@ -2,7 +2,6 @@
   <div class="card-product">
     <div class="box">
       <ToggleIcon @updateProduct="addToWishlist(product)" :product="product" />
-      <h5>{{ product.id }}</h5>
     </div>
     <img :src="product.image" alt="" class="card-product__image" />
     <h3 class="card-product__title">{{ product.title }}</h3>

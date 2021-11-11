@@ -1,20 +1,20 @@
 <template>
   <div class="home">
-    <LayoutDefault>
+    <AppLayout>
       <ListProducts title="Home" type="home" :list="productsOnApi" />
-    </LayoutDefault>
+    </AppLayout>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import LayoutDefault from "../layout/LayoutDefault.vue";
-import ListProducts from "../components/ListProducts/index.vue";
+import AppLayout from "../layout/AppLayout.vue";
+import ListProducts from "../components/ListProducts.vue";
 
 export default {
   name: "Home",
   components: {
-    LayoutDefault,
+    AppLayout,
     ListProducts,
   },
   data() {
