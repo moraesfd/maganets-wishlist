@@ -3,13 +3,28 @@
     <span>
       <font-awesome-icon icon="search" />
     </span>
-    <input type="text" placeholder="Busca" />
+    <input
+      type="text"
+      placeholder="Busca"
+      v-model="searchQuery"
+      @input="sendQuery"
+    />
   </div>
 </template>
 
 <script>
 export default {
   name: "SearchBar",
+  data() {
+    return {
+      searchQuery: null,
+    };
+  },
+  methods: {
+    sendQuery() {
+      this.$root.$emit("sendQuery", this.searchQuery);
+    },
+  },
 };
 </script>
 
