@@ -1,31 +1,47 @@
 <template>
   <div class="list-products">
     <h1 class="list-products__title">{{ title }}</h1>
-    <ul class="list-products__list">
+    <ul v-if="type == 'home'" class="list-products__list">
       <li v-for="product of list" :key="product.id">
-        <card-product
-          :image="product.image"
-          :title="product.title"
-          :price="product.price"
-        />
+        <card-product :product="product" />
+      </li>
+    </ul>
+    <ul v-else-if="type == 'wishlist'" class="list-products__list">
+      <li
+        v-for="product of wishlist"
+        :key="product.id"
+        @updateAllWishlist="updateWishlist(product)"
+      >
+        <card-product :product="product" />
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import CardProduct from '../ListProducts/CardProduct.vue'
+import CardProduct from "../ListProducts/CardProduct.vue";
 
 export default {
-  name: 'HomeList',
+  name: "HomeList",
   props: {
     title: String,
-    list: Array
+    type: String,
+    list: Array,
+  },
+  data() {
+    return {
+      wishlist: [],
+    };
   },
   components: {
-    CardProduct
-  }
-}
+    CardProduct,
+  },
+  methods: {
+    updateWishlist(product) {
+      this.wishlist.push(product);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

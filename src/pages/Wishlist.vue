@@ -1,7 +1,11 @@
 <template>
   <div class="wishlist">
     <LayoutDefault>
-      <ListProducts title="Home > Lista de desejos" :list="products" />
+      <ListProducts
+        title="Home > Lista de desejos"
+        type="wishlist"
+        :list="wishlist"
+      />
     </LayoutDefault>
   </div>
 </template>
@@ -17,36 +21,35 @@ export default {
   },
   data() {
     return {
-      products: [],
+      wishlist: [],
       newProduct: null,
     };
   },
   mounted() {
-    if (localStorage.getItem("products")) {
+    if (localStorage.getItem("my-wishlist")) {
       try {
-        this.products = JSON.parse(localStorage.getItem("products"));
+        this.wishlist = JSON.parse(localStorage.getItem("my-wishlist"));
       } catch (e) {
-        localStorage.removeItem("products");
+        localStorage.removeItem("my-wishlist");
       }
     }
   },
   methods: {
-    addProduct() {
-      if (!this.newProduct) {
+    addItem(item) {
+      if (!item) {
         return;
       }
 
-      this.products.push(this.newProduct);
-      this.newProduct = "";
-      this.saveProducts();
+      this.wishlist.push(item);
+      this.saveItems();
     },
-    removeProduct(x) {
-      this.products.splice(x, 1);
-      this.saveProducts();
+    removeItem(item) {
+      this.wishlist.splice(item, 1);
+      this.saveItems();
     },
-    saveProducts() {
-      const parsed = JSON.stringify(this.products);
-      localStorage.setItem("products", parsed);
+    saveItems() {
+      const parsed = JSON.stringify(this.wishlist);
+      localStorage.setItem("my-wishlist", parsed);
     },
   },
 };

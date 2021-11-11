@@ -2,17 +2,21 @@
   <header>
     <div class="header-container">
       <h1 class="header-container__company">{{ company }}</h1>
+      <div class="header-container__menu">
+        <router-link to="/">Home</router-link>
+        <router-link to="/wishlist">Wishlist</router-link>
+      </div>
     </div>
   </header>
 </template>
 
 <script>
 export default {
-  name: 'Header',
+  name: "Header",
   props: {
-    company: String
-  }
-}
+    company: String,
+  },
+};
 </script>
 <style lang="scss">
 header {

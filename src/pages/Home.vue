@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <LayoutDefault>
-      <ListProducts title="Home" :list="productsOnApi" />
+      <ListProducts title="Home" type="home" :list="productsOnApi" />
     </LayoutDefault>
   </div>
 </template>
@@ -37,17 +37,6 @@ export default {
         this.productsOnApi = res.data.products;
       } catch (e) {
         console.error(e);
-      }
-    },
-    verifyLocalStorage() {
-      if (localStorage.getItem("products")) {
-        try {
-          this.productsOnLocalStorage = JSON.parse(
-            localStorage.getItem("products")
-          );
-        } catch (e) {
-          localStorage.removeItem("products");
-        }
       }
     },
   },

@@ -1,18 +1,27 @@
 <template>
   <div class="card-product">
-    <img :src="image" alt="" class="card-product__image" />
-    <h3 class="card-product__title">{{ title }}</h3>
-    <h4 class="card-product__price">R$ {{ price }}</h4>
+    <div class="box">
+      <ToggleIcon @updateProduct="addToWishlist(product)" :product="product" />
+      <h5>{{ product.id }}</h5>
+    </div>
+    <img :src="product.image" alt="" class="card-product__image" />
+    <h3 class="card-product__title">{{ product.title }}</h3>
+    <h4 class="card-product__price">R$ {{ product.price }}</h4>
   </div>
 </template>
 
 <script>
+import ToggleIcon from "./ToggleIcon.vue";
 export default {
   name: "CardProduct",
-  props: {
-    title: String,
-    image: String,
-    price: String,
+  components: {
+    ToggleIcon,
+  },
+  props: ["product"],
+  methods: {
+    addToWishlist(product) {
+      this.$emit("updateAllWishlist", product);
+    },
   },
 };
 </script>
