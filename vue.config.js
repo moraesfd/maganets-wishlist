@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: '/maganets-wishlist'
+  publicPath: '/maganets-wishlist/dist'
 }
