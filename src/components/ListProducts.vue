@@ -2,13 +2,16 @@
   <div class="list-products">
     <h1 class="list-products__title">{{ title }}</h1>
     <ul v-if="type == 'home'" class="list-products__list">
-      <li v-for="product of resultQuery" :key="product.id">
-        <card-product :product="product" :default-toggle-state="false" />
+      <li v-for="product of resultQueryHome" :key="product.id">
+        <card-product
+          :product="product"
+          :default-toggle-state="verifyItemOnWishlist(product.id)"
+        />
       </li>
     </ul>
     <ul v-else-if="type == 'wishlist'" class="list-products__list">
       <li
-        v-for="(product, index) of wishlist"
+        v-for="(product, index) of resultQueryWishlist"
         :key="index"
         @updateAllWishlist="updateWishlist(product)"
       >
@@ -33,35 +36,47 @@ export default {
     return {
       searchQuery: null,
       wishlist: [],
+      nameLocalStorage: "my-wishlist",
     };
   },
   mounted() {
-    this.getWishlist();
+    this.wishlist = StorageService.getStorage(this.nameLocalStorage);
+
     this.$root.$on("sendQuery", (data) => {
       this.searchQuery = data;
     });
+
     this.$root.$on("updateWishlist", ({ item, status }) => {
-      this.updateItensWishlist(item, status);
+      if (status) {
+        this.addItem(item);
+      } else {
+        this.removeItem(item.id);
+      }
     });
   },
   components: {
     CardProduct,
   },
   methods: {
-    getWishlist() {
-      this.wishlist = StorageService.getStorage();
+    addItem(item) {
+      this.wishlist = [...this.wishlist, item];
     },
-    updateItensWishlist(item, status) {
-      if (status) {
-        StorageService.addItem(item);
-      } else {
-        StorageService.removeItem(item);
-      }
-      this.wishlist = StorageService.getStorage();
+    removeItem(id) {
+      this.wishlist = this.wishlist.filter((item) => item.id !== id);
+    },
+    verifyItemOnWishlist(id) {
+      return this.wishlist.filter((item) => item.id === id).length > 0;
+    },
+  },
+  watch: {
+    wishlist: {
+      handler() {
+        StorageService.setStorage(this.nameLocalStorage, this.wishlist);
+      },
     },
   },
   computed: {
-    resultQuery() {
+    resultQueryHome() {
       if (this.searchQuery) {
         return this.list.filter((item) => {
           return this.searchQuery
@@ -71,6 +86,18 @@ export default {
         });
       } else {
         return this.list;
+      }
+    },
+    resultQueryWishlist() {
+      if (this.searchQuery) {
+        return this.wishlist.filter((item) => {
+          return this.searchQuery
+            .toLowerCase()
+            .split(" ")
+            .every((v) => item.title.toLowerCase().includes(v));
+        });
+      } else {
+        return this.wishlist;
       }
     },
   },
