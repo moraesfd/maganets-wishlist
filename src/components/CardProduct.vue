@@ -1,7 +1,7 @@
 <template>
   <div class="card-product">
     <div class="box">
-      <ToggleIcon @updateProduct="addToWishlist(product)" :product="product" />
+      <ToggleIcon :product="product" :default-state="defaultToggleState" />
     </div>
     <img :src="product.image" alt="" class="card-product__image" />
     <h3 class="card-product__title">{{ product.title }}</h3>
@@ -16,12 +16,7 @@ export default {
   components: {
     ToggleIcon,
   },
-  props: ["product"],
-  methods: {
-    addToWishlist(product) {
-      this.$emit("updateAllWishlist", product);
-    },
-  },
+  props: ["product", "defaultToggleState"],
 };
 </script>
 

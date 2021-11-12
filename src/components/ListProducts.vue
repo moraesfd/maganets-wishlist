@@ -3,22 +3,23 @@
     <h1 class="list-products__title">{{ title }}</h1>
     <ul v-if="type == 'home'" class="list-products__list">
       <li v-for="product of resultQuery" :key="product.id">
-        <card-product :product="product" />
+        <card-product :product="product" :default-toggle-state="false" />
       </li>
     </ul>
     <ul v-else-if="type == 'wishlist'" class="list-products__list">
       <li
-        v-for="product of wishlist"
-        :key="product.id"
+        v-for="(product, index) of wishlist"
+        :key="index"
         @updateAllWishlist="updateWishlist(product)"
       >
-        <card-product :product="product" />
+        <card-product :product="product" :default-toggle-state="true" />
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import StorageService from "../services/storage.js";
 import CardProduct from "./CardProduct.vue";
 
 export default {
@@ -35,16 +36,28 @@ export default {
     };
   },
   mounted() {
+    this.getWishlist();
     this.$root.$on("sendQuery", (data) => {
       this.searchQuery = data;
+    });
+    this.$root.$on("updateWishlist", ({ item, status }) => {
+      this.updateItensWishlist(item, status);
     });
   },
   components: {
     CardProduct,
   },
   methods: {
-    updateWishlist(product) {
-      this.wishlist.push(product);
+    getWishlist() {
+      this.wishlist = StorageService.getStorage();
+    },
+    updateItensWishlist(item, status) {
+      if (status) {
+        StorageService.addItem(item);
+      } else {
+        StorageService.removeItem(item);
+      }
+      this.wishlist = StorageService.getStorage();
     },
   },
   computed: {

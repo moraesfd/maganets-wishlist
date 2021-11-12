@@ -3,9 +3,9 @@
     <button
       class="toggle-icon__button"
       @click="toggle(product)"
-      :class="{ active: isActive }"
+      :class="{ active: currentState }"
     >
-      <font-awesome-icon v-if="isActive" :icon="['fas', 'heart']" />
+      <font-awesome-icon v-if="currentState" :icon="['fas', 'heart']" />
       <font-awesome-icon v-else :icon="['far', 'heart']" />
     </button>
   </div>
@@ -30,13 +30,16 @@ export default {
   },
   data() {
     return {
-      isActive: false,
+      currentState: this.defaultState,
     };
   },
   methods: {
-    toggle(product) {
-      this.isActive = !this.isActive;
-      this.$emit("updateProduct", product);
+    toggle(item) {
+      this.currentState = !this.currentState;
+      this.$root.$emit("updateWishlist", {
+        item: item,
+        status: this.currentState,
+      });
     },
   },
 };
