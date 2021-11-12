@@ -7,18 +7,13 @@ export default {
     return this.baseUrl;
   },
 
-  handleErrors(err) {
-    console.log({ message: "Errors is handled here", err });
-  },
-
-  async getData() {
-    try {
-      return await axios.get(this.getUrl())
-        .then(response => {
-          return response.data;
-        })
-    } catch (err) {
-      this.handleErrors(err);
-    }
+  async getData(success, error) {
+    await axios.get(this.getUrl()).then(
+      (response) => {
+        success(response.data)
+      },
+      (response) => {
+        error(response)
+      })
   }
 }

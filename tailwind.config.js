@@ -26,7 +26,11 @@ module.exports = {
         '2xl': '6rem',
       },
     },
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'banner-arrow-down': "url('/assets/images/banner-arrow-down.svg')",
+      }
+    },
   },
   variants: {
     extend: {},

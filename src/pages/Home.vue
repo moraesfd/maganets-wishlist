@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import ApiService from "../services/api.js";
 import AppLayout from "../layout/AppLayout.vue";
 import ListProducts from "../components/ListProducts.vue";
 
@@ -28,16 +28,10 @@ export default {
     this.getDataFromApi();
   },
   methods: {
-    async getDataFromApi() {
-      try {
-        const res = await axios.get(
-          "https://run.mocky.io/v3/66063904-d43c-49ed-9329-d69ad44b885e"
-        );
-
-        this.productsOnApi = res.data.products;
-      } catch (e) {
-        console.error(e);
-      }
+    getDataFromApi() {
+      ApiService.getData((data) => {
+        this.productsOnApi = data.products;
+      });
     },
   },
 };
