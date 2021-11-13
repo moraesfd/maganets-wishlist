@@ -1,36 +1,35 @@
 <template>
-  <div class="list-products">
-    <h1 class="list-products__title">{{ title }}</h1>
-    <ul v-if="type == 'home'" class="list-products__list">
+  <div class="product-list">
+    <h1 class="product-list__title">{{ title }}</h1>
+    <ul v-if="type == 'home'" class="product-list__list">
       <li v-for="product of resultQueryHome" :key="product.id">
-        <card-product
+        <ProductCard
           :product="product"
           :default-toggle-state="verifyItemOnWishlist(product.id)"
         />
       </li>
     </ul>
-    <ul v-else-if="type == 'wishlist'" class="list-products__list">
-      <li
-        v-for="(product, index) of resultQueryWishlist"
-        :key="index"
-        @updateAllWishlist="updateWishlist(product)"
-      >
-        <card-product :product="product" :default-toggle-state="true" />
+    <ul v-else-if="type == 'wishlist'" class="product-list__list">
+      <li v-for="product of resultQueryWishlist" :key="product.id">
+        <ProductCard :product="product" :default-toggle-state="true" />
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import StorageService from "../services/storage.js";
-import CardProduct from "./CardProduct.vue";
+import StorageService from "@/services/storage.js";
+import ProductCard from "./ProductCard.vue";
 
 export default {
-  name: "HomeList",
+  name: "ProductList",
   props: {
     title: String,
     type: String,
     list: Array,
+  },
+  components: {
+    ProductCard,
   },
   data() {
     return {
@@ -46,16 +45,9 @@ export default {
       this.searchQuery = data;
     });
 
-    this.$root.$on("updateWishlist", ({ item, status }) => {
-      if (status) {
-        this.addItem(item);
-      } else {
-        this.removeItem(item.id);
-      }
+    this.$root.$on("updateWishlist", (item) => {
+      item.wishlist ? this.addItem(item) : this.removeItem(item.id);
     });
-  },
-  components: {
-    CardProduct,
   },
   methods: {
     addItem(item) {
@@ -105,7 +97,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.list-products {
+.product-list {
   @apply container;
 
   &__title {

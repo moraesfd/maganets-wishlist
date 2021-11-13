@@ -6,7 +6,6 @@ export default {
   getUrl() {
     return this.baseUrl;
   },
-
   async getData(success, error) {
     await axios.get(this.getUrl()).then(
       (response) => {
@@ -15,5 +14,26 @@ export default {
       (response) => {
         error(response)
       })
-  }
+  },
+  async getProductsFiltered(success, error) {
+    await axios.get(this.getUrl()).then(
+      (response) => {
+        let products = response.data.products
+        let filtered = []
+        products.filter((product) => {
+          let item = {
+            id: product.id,
+            title: product.title,
+            image: product.image,
+            price: product.price,
+            wishlist: false
+          }
+          filtered.push(item)
+        })
+        success(filtered)
+      },
+      (response) => {
+        error(response)
+      })
+  },
 }

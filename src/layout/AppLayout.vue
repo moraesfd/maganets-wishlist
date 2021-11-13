@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import Header from "../components/base/Header";
-import Footer from "../components/base/Footer.vue";
+import Header from "../components/header";
+import Footer from "../components/footer";
 
 export default {
-  name: "LayoutDefault",
+  name: "AppLayout",
   components: {
     Header,
     Footer,
