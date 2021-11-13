@@ -6,5 +6,9 @@ export default {
   getStorage(name) {
     let store = localStorage.getItem(name);
     return JSON.parse(store ?? '[]');
+  },
+
+  verifyStorage(name) {
+    return localStorage.getItem(name);
   }
 }

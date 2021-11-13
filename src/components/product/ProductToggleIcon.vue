@@ -1,10 +1,10 @@
 <template>
-  <div class="toggle-icon">
-    <div class="toggle-icon__background">
+  <div class="product-toggle-icon">
+    <div class="product-toggle-icon__background">
       <img src="@/assets/images/banner-arrow-down.svg" alt="" />
     </div>
     <button
-      class="toggle-icon__button"
+      class="product-toggle-icon__button"
       @click="toggle(product)"
       :class="{ active: currentState }"
     >
@@ -19,34 +19,33 @@ import { faHeart as fasHeart } from "@fortawesome/free-solid-svg-icons";
 library.add(fasHeart);
 
 export default {
-  name: "ToggleIcon",
+  name: "ProductToggleIcon",
   props: {
-    defaultState: {
-      type: Boolean,
-      default: false,
-    },
-    product: {
-      type: Object,
-    },
+    product: Object,
   },
   data() {
     return {
-      currentState: this.defaultState,
+      currentState: false,
     };
   },
+  mounted() {
+    this.verifyStateToggle();
+  },
   methods: {
-    toggle(item) {
+    toggle(product) {
       this.currentState = !this.currentState;
-      this.$root.$emit("updateWishlist", {
-        item: item,
-        status: this.currentState,
-      });
+      let item = product;
+      item.wishlist = this.currentState;
+      this.$root.$emit("updateWishlist", item);
+    },
+    verifyStateToggle() {
+      this.currentState = this.product.wishlist;
     },
   },
 };
 </script>
 <style lang="scss">
-.toggle-icon {
+.product-toggle-icon {
   @apply relative -left-2 h-2 -top-2.5;
 
   &__background {

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <AppLayout>
-      <ListProducts title="Home" type="home" :list="productsOnApi" />
+      <ProductList title="Home" type="home" :list="productsOnApi" />
     </AppLayout>
   </div>
 </template>
@@ -9,19 +9,17 @@
 <script>
 import ApiService from "../services/api.js";
 import AppLayout from "../layout/AppLayout.vue";
-import ListProducts from "../components/ListProducts.vue";
+import ProductList from "../components/product/ProductList.vue";
 
 export default {
   name: "Home",
   components: {
     AppLayout,
-    ListProducts,
+    ProductList,
   },
   data() {
     return {
       productsOnApi: [],
-      productsOnLocalStorage: [],
-      newProductOnLocalStorage: null,
     };
   },
   mounted() {
@@ -29,8 +27,8 @@ export default {
   },
   methods: {
     getDataFromApi() {
-      ApiService.getData((data) => {
-        this.productsOnApi = data.products;
+      ApiService.getProductsFiltered((data) => {
+        this.productsOnApi = data;
       });
     },
   },
