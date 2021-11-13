@@ -22,14 +22,15 @@ export default {
   name: "ProductToggleIcon",
   props: {
     product: Object,
+    defaultState: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
-      currentState: false,
+      currentState: this.defaultState,
     };
-  },
-  mounted() {
-    this.verifyStateToggle();
   },
   methods: {
     toggle(product) {
@@ -37,9 +38,6 @@ export default {
       let item = product;
       item.wishlist = this.currentState;
       this.$root.$emit("updateWishlist", item);
-    },
-    verifyStateToggle() {
-      this.currentState = this.product.wishlist;
     },
   },
 };

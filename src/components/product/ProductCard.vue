@@ -1,7 +1,10 @@
 <template>
   <div class="product-card">
     <div class="box">
-      <ProductToggleIcon :product="product" />
+      <ProductToggleIcon
+        :product="product"
+        :default-state="defaultToggleState"
+      />
     </div>
     <img :src="product.image" alt="" class="product-card__image" />
     <h3 class="product-card__title">{{ product.title }}</h3>
@@ -18,6 +21,7 @@ export default {
   },
   props: {
     product: Object,
+    defaultToggleState: Boolean,
   },
 };
 </script>

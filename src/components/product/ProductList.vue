@@ -3,12 +3,15 @@
     <h1 class="product-list__title">{{ title }}</h1>
     <ul v-if="type == 'home'" class="product-list__list">
       <li v-for="product of resultQueryHome" :key="product.id">
-        <ProductCard :product="product" />
+        <ProductCard
+          :product="product"
+          :default-toggle-state="verifyItemOnWishlist(product.id)"
+        />
       </li>
     </ul>
     <ul v-else-if="type == 'wishlist'" class="product-list__list">
-      <li v-for="product of resultQueryWishlist" :key="product">
-        <ProductCard :product="product" />
+      <li v-for="product of resultQueryWishlist" :key="product.id">
+        <ProductCard :product="product" :default-toggle-state="true" />
       </li>
     </ul>
   </div>
@@ -52,6 +55,9 @@ export default {
     },
     removeItem(id) {
       this.wishlist = this.wishlist.filter((item) => item.id !== id);
+    },
+    verifyItemOnWishlist(id) {
+      return this.wishlist.filter((item) => item.id === id).length > 0;
     },
   },
   watch: {
