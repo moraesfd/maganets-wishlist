@@ -1,17 +1,21 @@
 <template>
   <div class="product-list">
-    <h1 class="product-list__title">{{ title }}</h1>
     <ul v-if="type == 'home'" class="product-list__list">
       <li v-for="product of resultQueryHome" :key="product.id">
         <ProductCard
           :product="product"
           :default-toggle-state="verifyItemOnWishlist(product.id)"
+          :type="type"
         />
       </li>
     </ul>
     <ul v-else-if="type == 'wishlist'" class="product-list__list">
       <li v-for="product of resultQueryWishlist" :key="product.id">
-        <ProductCard :product="product" :default-toggle-state="true" />
+        <ProductCard
+          :product="product"
+          :default-toggle-state="true"
+          :type="type"
+        />
       </li>
     </ul>
   </div>
@@ -24,7 +28,6 @@ import ProductCard from "./ProductCard.vue";
 export default {
   name: "ProductList",
   props: {
-    title: String,
     type: String,
     list: Array,
   },
@@ -99,10 +102,6 @@ export default {
 <style lang="scss" scoped>
 .product-list {
   @apply container;
-
-  &__title {
-    @apply font-black pt-6;
-  }
 
   &__list {
     @apply grid gap-4 sm:grid-cols-2 md:grid-cols-4 container mx-auto py-8 px-0;

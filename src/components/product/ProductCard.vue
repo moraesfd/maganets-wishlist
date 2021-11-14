@@ -4,6 +4,7 @@
       <ProductToggleIcon
         :product="product"
         :default-state="defaultToggleState"
+        :type="type"
       />
     </div>
     <img :src="product.image" alt="" class="product-card__image" />
@@ -22,6 +23,7 @@ export default {
   props: {
     product: Object,
     defaultToggleState: Boolean,
+    type: String,
   },
 };
 </script>

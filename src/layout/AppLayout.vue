@@ -3,14 +3,14 @@
     <Header company="MagaNets" />
     <slot />
     <Footer
-      info="Projeto teste para o Luizalabs realizado por Felipe de Moraes. 2021"
+      info="Teste de desenvolvimento Front-End realizado para a vaga no Luizalabs. 2021."
     />
   </div>
 </template>
 
 <script>
-import Header from "../components/header";
-import Footer from "../components/footer";
+import Header from "../components/base/header";
+import Footer from "../components/base/footer";
 
 export default {
   name: "AppLayout",

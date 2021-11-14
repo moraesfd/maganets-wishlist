@@ -8,11 +8,11 @@
 
 <script>
 export default {
-  name: 'Footer',
+  name: "Footer",
   props: {
-    info: String
-  }
-}
+    info: String,
+  },
+};
 </script>
 <style lang="scss">
 footer {
