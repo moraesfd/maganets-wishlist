@@ -2,7 +2,8 @@
   <div class="wishlist">
     <AppLayout>
       <Breadcrumb type="wishlist" />
-      <ProductList type="wishlist" />
+      <ProductList v-if="!emptyWishlist" type="wishlist" />
+      <EmptyState v-else msg="Ops! Sua lista de desejos está vazia." />
     </AppLayout>
   </div>
 </template>
@@ -10,9 +11,20 @@
 import AppLayout from "../layout/AppLayout.vue";
 import ProductList from "../components/product/ProductList.vue";
 import Breadcrumb from "../components/common/Breadcrumb.vue";
+import EmptyState from "../components/common/EmptyState.vue";
 
 export default {
   name: "Wishlist",
+  data() {
+    return {
+      emptyWishlist: false,
+    };
+  },
+  mounted() {
+    this.$root.$on("emptyWishlist", (status) => {
+      this.emptyWishlist = status;
+    });
+  },
   metaInfo() {
     return {
       title: "MagaNets - Wishlist",
@@ -36,6 +48,7 @@ export default {
     AppLayout,
     ProductList,
     Breadcrumb,
+    EmptyState,
   },
 };
 </script>

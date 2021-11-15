@@ -9,7 +9,10 @@
         />
       </li>
     </ul>
-    <ul v-else-if="type == 'wishlist'" class="product-list__list">
+    <ul
+      v-else-if="type == 'wishlist' && wishlist.length"
+      class="product-list__list"
+    >
       <li v-for="product of resultQueryWishlist" :key="product.id">
         <ProductCard
           :product="product"
@@ -18,6 +21,7 @@
         />
       </li>
     </ul>
+    <ul v-else class="product-list__list"></ul>
   </div>
 </template>
 
@@ -67,6 +71,9 @@ export default {
     wishlist: {
       handler() {
         StorageService.setStorage(this.nameLocalStorage, this.wishlist);
+        if (this.wishlist.length == 0) {
+          this.$root.$emit("emptyWishlist", true);
+        }
       },
     },
   },
