@@ -6,7 +6,7 @@
   </a>
 </p>
 
-> Este projeto foi desenvolvido como teste para demonstrar os conhecimentos técnicos de Front-End para uma vaga no processo seletivo do Luizalabs.
+> Este projeto foi desenvolvido como teste para demonstrar os conhecimentos técnicos de Front-End e linguagem Vue.js.
 
 ### Website Preview
 ---
