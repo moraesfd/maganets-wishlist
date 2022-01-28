@@ -3,7 +3,7 @@
     <Header company="MagaNets" />
     <slot />
     <Footer
-      info="Teste de desenvolvimento Front-End realizado para a vaga no Luizalabs. 2021."
+      info="Teste para demonstrar os conhecimentos em Front-End."
     />
   </div>
 </template>
