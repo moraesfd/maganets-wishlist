@@ -22,7 +22,7 @@ export default {
         {
           name: "description",
           content:
-            "Teste de desenvolvimento Front-End realizado para a vaga no Luizalabs",
+            "Teste para demonstrar os conhecimentos em Front-End",
         },
         {
           property: "og:title",
